@@ -1,0 +1,11 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: SRE/HIAE.SRE.Templates
+      ref: refs/heads/master
+stages:
+  - template: catalog/openshift-nodejs-v3.yml@templates
+trigger:
+  - develop
+  - hotfix
