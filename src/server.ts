@@ -1,7 +1,10 @@
 import Fastify, { FastifyInstance } from 'fastify'
+import FastifyMultipart from '@fastify/multipart'
 import { routes } from './routes'
 
 export const server: FastifyInstance = Fastify({})
+
+server.register(FastifyMultipart, { attachFieldsToBody: true })
 
 server.register(routes)
 
