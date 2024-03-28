@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.26.2"
+    "axios": "^1.6.8",
+    "fastify": "^4.26.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@fastify/multipart": "^8.2.0",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.30",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
