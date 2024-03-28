@@ -1,10 +1,4 @@
-interface IUserCanvas {
-  name: string
-}
-
-interface ICourseCanvas {
-  name: string
-}
+import { ICourseCanvas, IUserCanvas } from "../../types/canvas"
 
 export const canvasApi = {
   getUser: (userId: string): IUserCanvas | undefined => {

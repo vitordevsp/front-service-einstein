@@ -1,14 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
 import jsonwebtoken from "jsonwebtoken"
 import { canvasApi } from "../../services/canvasApi"
+import { IAuthentication } from "../../types/canvas"
 
-interface IAuthentication {
-  email: string
-  userId: string
-  courseId: string
-}
-
-const secretJWT = '9f8ansdf9asnbfdasfh9an98fsnd98an'
+const secretJWT = process.env.SECRET_KEY || ''
 
 export async function authenticationRoute(app: FastifyInstance) {
   app.post('/canvas/authentication', (req: FastifyRequest, reply: FastifyReply) => {
