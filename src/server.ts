@@ -1,3 +1,5 @@
+import "dotenv/config"
+
 import Fastify, { FastifyInstance } from 'fastify'
 import FastifyMultipart from '@fastify/multipart'
 import { routes } from './routes'
