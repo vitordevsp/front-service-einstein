@@ -20,7 +20,7 @@ async function start() {
     console.log('Servidor rodando na porta:', port)
   }
   catch (err) {
-    server.log.error(err)
+    console.error(err)
     process.exit(1)
   }
 }
