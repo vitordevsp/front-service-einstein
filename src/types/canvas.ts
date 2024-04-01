@@ -4,10 +4,10 @@ export interface IAuthentication {
   courseId: string
 }
 
-export interface IUserCanvas {
+export interface ICanvasUser {
   name: string
 }
 
-export interface ICourseCanvas {
+export interface ICanvasCourse {
   name: string
 }
