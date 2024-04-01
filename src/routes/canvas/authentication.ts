@@ -1,17 +1,17 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
 import jsonwebtoken from "jsonwebtoken"
-import { canvasApi } from "../../services/canvasApi"
+import { canvasService } from "../../services/canvasService"
 import { IAuthentication } from "../../types/canvas"
 
 const secretJWT = process.env.SECRET_KEY || ''
 
 export async function authenticationRoute(app: FastifyInstance) {
-  app.post('/canvas/authentication', (req: FastifyRequest, reply: FastifyReply) => {
+  app.post('/canvas/authentication', async (req: FastifyRequest, reply: FastifyReply) => {
     try {
       const authData = req.body as IAuthentication
 
-      const userInfo = canvasApi.getUser(authData.userId)
-      const courseInfo = canvasApi.getCourse(authData.courseId)
+      const userInfo = await canvasService.getUser(authData.userId)
+      const courseInfo = await canvasService.getCourse(authData.courseId)
 
       if (!userInfo || !courseInfo) {
         return reply.status(401).send({
