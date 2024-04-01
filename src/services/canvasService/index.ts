@@ -5,7 +5,7 @@ export const canvasService = {
   getUser: async (userId: string): Promise<ICanvasUser | undefined> => {
     if (!userId) return undefined
 
-    const { data } = await canvasAPI.get('/...user-info')
+    // const { data } = await canvasAPI.get('/...user-info')
 
     return {
       name: 'Vitor Sampaio'
@@ -15,7 +15,7 @@ export const canvasService = {
   getCourse: async (courseId: string): Promise<ICanvasCourse | undefined> => {
     if (!courseId) return undefined
 
-    const { data } = await canvasAPI.get('/...course-info')
+    // const { data } = await canvasAPI.get('/...course-info')
 
     return {
       name: 'Curso canvas'
