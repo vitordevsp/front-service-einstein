@@ -1,13 +1,23 @@
-export interface IAuthentication {
+// Request
+
+export interface IAuthenticationRequest {
   email: string
   userId: string
   courseId: string
 }
 
-export interface ICanvasUser {
+// Response
+
+export interface IAuthenticationResponse {
+  token: string
+  userInfo: ICanvasUserResponse
+  courseInfo: ICanvasCourseResponse
+}
+
+export interface ICanvasUserResponse {
   name: string
 }
 
-export interface ICanvasCourse {
+export interface ICanvasCourseResponse {
   name: string
 }

@@ -1,9 +1,9 @@
 import { canvasAPI } from "../../lib/canvasAPI"
-import { ICanvasCourse, ICanvasUser } from "../../types/canvas"
+import { ICanvasCourseResponse, ICanvasUserResponse } from "../../types/canvas"
 
 export const canvasService = {
-  getUser: async (userId: string): Promise<ICanvasUser | undefined> => {
-    if (!userId) return undefined
+  getUser: async (userId: string): Promise<ICanvasUserResponse | null> => {
+    if (!userId) return null
 
     // const { data } = await canvasAPI.get('/...user-info')
 
@@ -12,8 +12,8 @@ export const canvasService = {
     }
   },
 
-  getCourse: async (courseId: string): Promise<ICanvasCourse | undefined> => {
-    if (!courseId) return undefined
+  getCourse: async (courseId: string): Promise<ICanvasCourseResponse | null> => {
+    if (!courseId) return null
 
     // const { data } = await canvasAPI.get('/...course-info')
 
