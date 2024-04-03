@@ -14,7 +14,10 @@ server.register(routes)
 
 async function start() {
   try {
-    await server.listen({ port: PORT })
+    await server.listen({
+      host: '0.0.0.0',
+      port: PORT,
+    })
 
     const address = server.server.address()
     const port = typeof address === 'string' ? address : address?.port
