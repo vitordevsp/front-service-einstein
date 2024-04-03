@@ -1,7 +1,7 @@
 // Request
 
 export interface IAuthenticationRequest {
-  email: string
+  email?: string
   userId: string
   courseId: string
 }
@@ -10,8 +10,8 @@ export interface IAuthenticationRequest {
 
 export interface IAuthenticationResponse {
   token: string
-  userInfo: ICanvasUserResponse
-  courseInfo: ICanvasCourseResponse
+  userInfo: ICanvasUserResponse | null
+  courseInfo: ICanvasCourseResponse | null
 }
 
 export interface ICanvasUserResponse {
