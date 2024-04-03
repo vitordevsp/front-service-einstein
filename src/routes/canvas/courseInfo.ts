@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
-import { canvasService } from "../../services/canvasService"
+import { canvasService } from "../../services/canvasLMSService"
 
 export async function courseInfoRoute(app: FastifyInstance) {
   app.get('/canvas/course-info/:courseId', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -8,11 +8,10 @@ export async function courseInfoRoute(app: FastifyInstance) {
 
       const courseInfo = await canvasService.getCourse(courseId)
 
-      console.log('courseInfo: ', courseInfo)
-
       return reply.status(200).send(courseInfo)
     }
     catch (error) {
+      console.error('ERROR | courseInfoRoute: ', error)
       return reply.status(500).send({ error })
     }
   })
