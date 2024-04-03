@@ -4,6 +4,8 @@ import Fastify, { FastifyInstance } from 'fastify'
 import FastifyMultipart from '@fastify/multipart'
 import { routes } from './routes'
 
+const PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 8080
+
 export const server: FastifyInstance = Fastify({})
 
 server.register(FastifyMultipart, { attachFieldsToBody: true })
@@ -12,7 +14,7 @@ server.register(routes)
 
 async function start() {
   try {
-    await server.listen({ port: 8080 })
+    await server.listen({ port: PORT })
 
     const address = server.server.address()
     const port = typeof address === 'string' ? address : address?.port
