@@ -5,10 +5,18 @@ import { ICanvasCourseResponse, ICanvasUserResponse } from "../../types/canvas"
 // @TODO: autenticar esse serviço
 export const canvasService = {
   /** Retorna informações de um usuario pelo ID. */
-  getUser: async (userId: string): Promise<IUserCanvasLMS | null> => {
+  getUser: async (userId: string): Promise<ICanvasUserResponse | null> => {
     try {
       const { data } = await canvasAPI.get<IUserCanvasLMS>(`/api/v1/users/${userId}`)
-      return data
+
+      const canvasUser: ICanvasUserResponse = {
+        id: userId,
+        name: data.name,
+        email: data.email,
+        avatar_url: data.avatar_url,
+      }
+
+      return canvasUser
     }
     catch (error) {
       console.log('ERROR | canvasService.getUser: ', error)
@@ -20,7 +28,15 @@ export const canvasService = {
   getCourse: async (courseId: string): Promise<ICanvasCourseResponse | null> => {
     try {
       const { data } = await canvasAPI.get<ICourseCanvasLMS>(`/api/v1/courses/${courseId}`)
-      return data
+
+      const canvasCourse: ICanvasCourseResponse = {
+        id: courseId,
+        name: data.name,
+        start_at: data.start_at,
+        end_at: data.end_at,
+      }
+
+      return canvasCourse
     }
     catch (error) {
       console.log('ERROR | canvasService.getCourse: ', error)
