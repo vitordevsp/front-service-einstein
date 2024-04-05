@@ -1,21 +1,26 @@
 import "dotenv/config"
-
-import Fastify, { FastifyInstance } from 'fastify'
+import Fastify from 'fastify'
 import FastifyMultipart from '@fastify/multipart'
+import FastifyCors from '@fastify/cors'
 import { routes } from './routes'
 
+const HOST = process.env.SERVER_HOST || '0.0.0.0'
 const PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 8080
+const CORS_ORIGIN = process.env.SERVER_CORS_ORIGIN || '*'
 
-export const server: FastifyInstance = Fastify({})
+export const server = Fastify()
 
 server.register(FastifyMultipart, { attachFieldsToBody: true })
+server.register(FastifyCors, {
+  origin: CORS_ORIGIN,
+})
 
 server.register(routes)
 
 async function start() {
   try {
     await server.listen({
-      host: '0.0.0.0',
+      host: HOST,
       port: PORT,
     })
 
