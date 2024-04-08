@@ -17,6 +17,7 @@ export interface IAuthenticationResponse {
 export interface ICanvasUserResponse {
   id: string
   name: string
+  display_name: string
   avatar_url: string
   email: string
 }

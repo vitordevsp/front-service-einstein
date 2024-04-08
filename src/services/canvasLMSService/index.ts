@@ -1,6 +1,7 @@
 import { canvasAPI } from "../../lib/canvasAPI"
 import { ICourseCanvasLMS, IUserCanvasLMS } from "../../types/canvasLMS"
 import { ICanvasCourseResponse, ICanvasUserResponse } from "../../types/canvas"
+import { generateUserDisplayName } from "../../utils/helpers"
 
 // @TODO: autenticar esse serviço
 export const canvasService = {
@@ -9,9 +10,12 @@ export const canvasService = {
     try {
       const { data } = await canvasAPI.get<IUserCanvasLMS>(`/api/v1/users/${userId}`)
 
+      const display_name = generateUserDisplayName(data.name)
+
       const canvasUser: ICanvasUserResponse = {
         id: userId,
         name: data.name,
+        display_name,
         email: data.email,
         avatar_url: data.avatar_url,
       }
@@ -51,7 +55,6 @@ export const canvasService = {
       return true
     }
     catch (error) {
-      console.log('ERROR | canvasService.checkUserExistsInTheCourse: ', error)
       return false
     }
   },

@@ -12,7 +12,7 @@ export async function authenticationRoute(app: FastifyInstance) {
 
       const userInfo = await canvasService.getUser(userId)
       const courseInfo = await canvasService.getCourse(courseId)
-      const isUserExist = await canvasService.checkUserExistsInTheCourse(userId, courseId)
+      // const isUserExist = await canvasService.checkUserExistsInTheCourse(userId, courseId)
 
       // if (!userInfo || !courseInfo || !isUserExist) {
       //   return reply.status(401).send({
