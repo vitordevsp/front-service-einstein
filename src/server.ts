@@ -8,11 +8,16 @@ const HOST = process.env.SERVER_HOST || '0.0.0.0'
 const PORT = process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 8080
 const CORS_ORIGIN = process.env.SERVER_CORS_ORIGIN || '*'
 
+let origin: string | string[] = CORS_ORIGIN
+if (CORS_ORIGIN.includes(',')) {
+  origin = CORS_ORIGIN.split(',').map(v => v.trim())
+}
+
 export const server = Fastify()
 
 server.register(FastifyMultipart, { attachFieldsToBody: true })
 server.register(FastifyCors, {
-  origin: CORS_ORIGIN,
+  origin,
 })
 
 server.register(routes)
