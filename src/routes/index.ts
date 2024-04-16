@@ -8,6 +8,6 @@ import { courseInfoRoute } from "./canvas/courseInfo"
 export async function routes() {
   server.register(authenticationRoute)
   server.register(loadLTIRoute)
-  server.register(userInfoRoute)
-  server.register(courseInfoRoute)
+  // server.register(userInfoRoute)
+  // server.register(courseInfoRoute)
 }
