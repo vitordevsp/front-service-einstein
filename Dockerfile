@@ -16,6 +16,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --silent
 
+# Builds the application
+RUN npm run build  
+
 # Expose port 3000 to access the application
 EXPOSE 3000
 
