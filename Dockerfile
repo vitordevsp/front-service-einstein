@@ -1,21 +1,36 @@
 # Dockerfile for Node application
 # Author: Ricardo Faccioli
 
-
+# Use a Node.js 18 image with Alpine Linux
 FROM node:18-alpine
+
+# Install bash and also git if needed (often useful with npm install)
 RUN apk add --no-cache bash
+
+# Set the working directory inside the container to /app
 WORKDIR /app
 
-# Copiando arquivos necessários
+# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
+
+# Install dependencies quietly, including TypeScript globally and any other build tools
 RUN npm install --silent
+RUN npm install -g typescript
 
-# Copiando o diretório src inteiro
-COPY src ./src  
+# Copy the entire src directory to /app/src in the container
+COPY src ./src
 
-# Expondo a porta e configurando variáveis de ambiente
+# You might also need to copy tsconfig.json if you have specific compiler options
+COPY tsconfig.json .
+
+# Compile TypeScript to JavaScript
+RUN tsc
+
+# Expose port 3000 for the application
 EXPOSE 3000
+
+# Set environment variables
 ENV ADDRESS=0.0.0.0 PORT=3000
 
-# Comando para iniciar a aplicação
-CMD ["node", "src/server.js"]
+# Command to run the compiled JavaScript file
+CMD ["node", "dist/server.js"]
