@@ -1,4 +1,4 @@
-# Dockerfile for Vite/React application using multi-stage builds
+# Dockerfile for Node application using multi-stage builds
 # Author: Ricardo Faccioli
 
 FROM node:18-alpine AS build-stage
