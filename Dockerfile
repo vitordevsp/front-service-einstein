@@ -27,10 +27,10 @@ COPY tsconfig.json .
 RUN tsc
 
 # Expose port 3000 for the application
-EXPOSE 3000
+EXPOSE 8080
 
 # Set environment variables
-ENV ADDRESS=0.0.0.0 PORT=3000
+ENV ADDRESS=0.0.0.0 PORT=8080
 
 # Command to run the compiled JavaScript file
 CMD ["node", "dist/server.js"]
