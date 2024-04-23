@@ -10,6 +10,7 @@ export interface IAuthenticationRequest {
 
 export interface IAuthenticationResponse {
   token: string
+  token_exp_date: string
   userInfo: ICanvasUserResponse | null
   courseInfo: ICanvasCourseResponse | null
 }
