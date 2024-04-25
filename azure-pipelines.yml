@@ -8,7 +8,7 @@ stages:
   - template: catalog/openshift-react-v4.yml@templates
     parameters:
       node version: "18.0.0"
-      targets: "**/*.tsx"
+      targets: "**/*.ts"
 trigger:
   - develop
   - hotfix
