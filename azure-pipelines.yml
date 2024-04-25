@@ -5,7 +5,7 @@ resources:
       name: SRE/HIAE.SRE.Templates
       ref: refs/heads/master
 stages:
-  - template: catalog/openshift-react-v4.yml@templates
+  - template: catalog/openshift-react-v3.yml@templates
     parameters:
       node version: "18.0.0"
       targets: "**/*.ts"
