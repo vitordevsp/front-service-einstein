@@ -1,8 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
 import { canvasService } from "../../services/canvasLMSService"
+import { coreService } from "../../services/CoreService"
+import { generateAppError } from "../../utils/handleErrors"
 import { IAuthenticationRequest, IAuthenticationResponse } from "../../types/canvas"
 import { ICreateUserPayload } from "../../types/coreAPI"
-import { coreService } from "../../services/CoreService"
 
 export async function authenticationRoute(app: FastifyInstance) {
   app.post('/canvas/authentication', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -51,8 +52,10 @@ export async function authenticationRoute(app: FastifyInstance) {
       return reply.status(200).send(authenticationResponse)
     }
     catch (error) {
-      console.error('ERROR | authenticationRoute: ', error)
-      return reply.status(500).send(error)
+      const appError = generateAppError(error)
+      console.error('ERROR | authenticationRoute | post | /canvas/authentication: ', appError)
+
+      return reply.status(500).send(appError)
     }
   })
 }

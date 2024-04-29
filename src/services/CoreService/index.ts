@@ -1,20 +1,23 @@
 import { coreAPI } from "../../lib/coreAPI"
+import { generateAppError } from "../../utils/handleErrors"
 import { ICreateUserPayload, ISlidingToken } from "../../types/coreAPI"
 
 export const coreService = {
-  /** Retorna informações de um usuario pelo ID. */
+  /** Cria um usuario. */
   createUser: async (userPayload: ICreateUserPayload): Promise<ISlidingToken | null> => {
     try {
       const { data } = await coreAPI.post<ISlidingToken>('/chattutor/api/v1/auth/account', userPayload)
       return data
     }
     catch (error) {
-      console.log('ERROR | coreService.createUser: ', error)
+      const appError = generateAppError(error)
+      console.error('ERROR | coreService.createUser: ', appError)
+
       return null
     }
   },
 
-  /** Retorna informações de um usuario pelo ID. */
+  /** Retorna o token de acesso. */
   generateToken: async (email: string, password: string): Promise<ISlidingToken> => {
     try {
       const { data } = await coreAPI.post<ISlidingToken>('/chattutor/api/v1/auth/sliding', {
@@ -25,7 +28,9 @@ export const coreService = {
       return data
     }
     catch (error) {
-      console.log('ERROR | coreService.generateToken: ', error)
+      const appError = generateAppError(error)
+      console.error('ERROR | coreService.generateToken: ', appError)
+
       throw error
     }
   },

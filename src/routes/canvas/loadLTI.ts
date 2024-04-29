@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
+import { generateAppError } from "../../utils/handleErrors"
 
 export async function loadLTIRoute(app: FastifyInstance) {
   app.post('/canvas/load-lti', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -12,8 +13,10 @@ export async function loadLTIRoute(app: FastifyInstance) {
       return reply.redirect(301, urlRedirect)
     }
     catch (error) {
-      console.error('ERROR | loadLTIRoute: ', error)
-      return reply.status(500).send({ error })
+      const appError = generateAppError(error)
+      console.error('ERROR | loadLTIRoute | post | /canvas/load-lti: ', appError)
+
+      return reply.status(500).send(appError)
     }
   })
 }

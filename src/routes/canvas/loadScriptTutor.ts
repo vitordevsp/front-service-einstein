@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
+import { generateAppError } from "../../utils/handleErrors"
 
 export async function loadScriptTutor(app: FastifyInstance) {
   app.get('/canvas/load-script-tutor', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -7,8 +8,10 @@ export async function loadScriptTutor(app: FastifyInstance) {
       return reply.redirect(301, urlRedirect)
     }
     catch (error) {
-      console.error('ERROR | loadScriptTutor: ', error)
-      return reply.status(500).send({ error })
+      const appError = generateAppError(error)
+      console.error('ERROR | loadScriptTutor | get | /canvas/load-script-tutor: ', appError)
+
+      return reply.status(500).send(appError)
     }
   })
 }

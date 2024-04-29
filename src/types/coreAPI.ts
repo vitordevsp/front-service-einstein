@@ -10,3 +10,10 @@ export interface ISlidingToken {
   token: string
   token_exp_date: string
 }
+
+export interface ICoreAPIError {
+  status: string
+  messages: {
+    message: string
+  }
+}
