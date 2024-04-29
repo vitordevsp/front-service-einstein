@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
 import { canvasService } from "../../services/canvasLMSService"
+import { generateAppError } from "../../utils/handleErrors"
 
 export async function userInfoRoute(app: FastifyInstance) {
   app.get('/canvas/user-info/:userId', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -11,8 +12,10 @@ export async function userInfoRoute(app: FastifyInstance) {
       return reply.status(200).send(userInfo)
     }
     catch (error) {
-      console.error('ERROR | userInfoRoute: ', error)
-      return reply.status(500).send({ error })
+      const appError = generateAppError(error)
+      console.error('ERROR | userInfoRoute | get | /canvas/user-info/:userId: ', appError)
+
+      return reply.status(500).send(appError)
     }
   })
 }

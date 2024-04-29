@@ -1,7 +1,8 @@
 import { canvasAPI } from "../../lib/canvasAPI"
+import { generateUserDisplayName } from "../../utils/helpers"
+import { generateAppError } from "../../utils/handleErrors"
 import { ICourseCanvasLMS, IUserCanvasLMS } from "../../types/canvasLMS"
 import { ICanvasCourseResponse, ICanvasUserResponse } from "../../types/canvas"
-import { generateUserDisplayName } from "../../utils/helpers"
 
 // @TODO: autenticar esse serviço
 export const canvasService = {
@@ -23,7 +24,9 @@ export const canvasService = {
       return canvasUser
     }
     catch (error) {
-      console.log('ERROR | canvasService.getUser: ', error)
+      const appError = generateAppError(error)
+      console.error('ERROR | canvasService.getUser: ', appError)
+
       return null
     }
   },
@@ -43,7 +46,9 @@ export const canvasService = {
       return canvasCourse
     }
     catch (error) {
-      console.log('ERROR | canvasService.getCourse: ', error)
+      const appError = generateAppError(error)
+      console.error('ERROR | canvasService.getCourse: ', appError)
+
       return null
     }
   },
@@ -55,6 +60,9 @@ export const canvasService = {
       return true
     }
     catch (error) {
+      const appError = generateAppError(error)
+      console.error('ERROR | canvasService.checkUserExistsInTheCourse: ', appError)
+
       return false
     }
   },

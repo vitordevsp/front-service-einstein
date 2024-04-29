@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify"
-import jsonwebtoken from "jsonwebtoken"
 import { canvasService } from "../../services/canvasLMSService"
+import { coreService } from "../../services/CoreService"
+import { generateAppError } from "../../utils/handleErrors"
 import { IAuthenticationRequest, IAuthenticationResponse } from "../../types/canvas"
-
-const secretJWT = process.env.SECRET_KEY || ''
+import { ICreateUserPayload } from "../../types/coreAPI"
 
 export async function authenticationRoute(app: FastifyInstance) {
   app.post('/canvas/authentication', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -20,16 +20,31 @@ export async function authenticationRoute(app: FastifyInstance) {
         })
       }
 
-      const jwtPayload = {
-        id: userId,
-        name: userInfo?.name,
-        email: userInfo?.email,
+      const userPayload: ICreateUserPayload = {
+        email: userInfo.email,
+        lms_user_id: userInfo.id,
+        password: userInfo.id,
+        name: userInfo.name,
+        last_name: "",
       }
 
-      const token = jsonwebtoken.sign(jwtPayload, secretJWT)
+      let token = ""
+      let token_exp_date = ""
+
+      const userCreated = await coreService.createUser(userPayload)
+      if (userCreated) {
+        token = userCreated.token
+        token_exp_date = userCreated.token_exp_date
+      }
+      else {
+        const responseToken = await coreService.generateToken(userInfo.email, userInfo.id)
+        token = responseToken.token
+        token_exp_date = responseToken.token_exp_date
+      }
 
       const authenticationResponse: IAuthenticationResponse = {
         token,
+        token_exp_date,
         userInfo,
         courseInfo
       }
@@ -37,8 +52,10 @@ export async function authenticationRoute(app: FastifyInstance) {
       return reply.status(200).send(authenticationResponse)
     }
     catch (error) {
-      console.error('ERROR | authenticationRoute: ', error)
-      return reply.status(500).send(error)
+      const appError = generateAppError(error)
+      console.error('ERROR | authenticationRoute | post | /canvas/authentication: ', appError)
+
+      return reply.status(500).send(appError)
     }
   })
 }
