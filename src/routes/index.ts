@@ -1,17 +1,26 @@
 import { server } from "../server"
 
 import { authenticationRoute } from "./canvas/authentication"
-import { loadLTIRoute } from "./canvas/loadLTI"
 import { userInfoRoute } from "./canvas/userInfo"
 import { courseInfoRoute } from "./canvas/courseInfo"
-import { loadScriptTutor } from "./canvas/loadScriptTutor"
-import { loadStyleTutor } from "./canvas/loadStyleTutor"
+
+import { tutorLoadLTIRoute } from "./tutor/loadLTI"
+import { loadScriptTutor } from "./tutor/loadScriptTutor"
+import { loadStyleTutor } from "./tutor/loadStyleTutor"
+
+import { generatorLoadLTIRoute } from "./generator/loadLTI"
 
 export async function routes() {
+  // Rotas | Canvas
   server.register(authenticationRoute)
   // server.register(userInfoRoute)
   // server.register(courseInfoRoute)
-  server.register(loadLTIRoute)
+
+  // Rotas | Tutor
+  server.register(tutorLoadLTIRoute)
   server.register(loadScriptTutor)
   server.register(loadStyleTutor)
+
+  // Rotas | Generator
+  server.register(generatorLoadLTIRoute)
 }
